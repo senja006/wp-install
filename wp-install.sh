@@ -152,7 +152,7 @@ EOL
 sudo sh -c "echo \"127.0.0.1	$localhostname\" >> /private/etc/hosts"
 
 #устанавливаем Wordpress
-open http://$localhostname
+open -a safari http://$localhostname
 
 #удаление файлов
 rm wp-install.sh
