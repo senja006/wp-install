@@ -132,14 +132,14 @@ echo "Создание виртуального хоста"
 echo "============================================"
 
 echo "Название виртуального хоста (example.local): "
-read -e localhostname
+read -e vhostname
 
 rootHost=${PWD}
 cat >> /Applications/XAMPP/etc/extra/httpd-vhosts.conf <<EOL
 
-#$localhostname
+#$vhostname
 <VirtualHost *:80>
-    ServerName $localhostname
+    ServerName $vhostname
     DocumentRoot "$rootHost"
     <Directory "$rootHost">
         Options Indexes FollowSymLinks Includes ExecCGI 
@@ -149,10 +149,10 @@ cat >> /Applications/XAMPP/etc/extra/httpd-vhosts.conf <<EOL
     ErrorLog "logs/site.local-error_log" 
 </VirtualHost> 
 EOL
-sudo sh -c "echo \"127.0.0.1	$localhostname\" >> /private/etc/hosts"
+sudo sh -c "echo \"127.0.0.1	$vhostname\" >> /private/etc/hosts"
 
 #устанавливаем Wordpress
-open -a safari http://$localhostname
+open -a safari http://$vhostname
 
 #удаление файлов
 rm wp-install.sh
