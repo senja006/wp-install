@@ -104,10 +104,10 @@ read -e setupmysql
 if [ "$setupmysql" == y ] ; then
 	echo "Используется XAMPP? (y/n): "
 	read -e usexampp
-	echo "Администратор базы данных: "
-	read -e mysqluser
-	echo "Пароль администратора: "
-	read -s mysqlpass
+	#echo "Администратор базы данных: "
+	#read -e mysqluser
+	#echo "Пароль администратора: "
+	#read -s mysqlpass
 	echo "Хост (По умолчанию 'localhost'): "
 	read -e mysqlhost
 		mysqlhost=${mysqlhost:-localhost}
@@ -136,6 +136,7 @@ read -e localhostname
 
 rootHost=${PWD}
 cat >> /Applications/XAMPP/etc/extra/httpd-vhosts.conf <<EOL
+
 #$localhostname
 <VirtualHost *:80>
     ServerName $localhostname
@@ -151,7 +152,7 @@ EOL
 sudo sh -c "echo \"127.0.0.1	$localhostname\" >> /private/etc/hosts"
 
 #устанавливаем Wordpress
-open $localhostname
+open http://$localhostname
 
 #удаление файлов
 rm wp-install.sh
