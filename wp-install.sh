@@ -151,11 +151,20 @@ cat >> /Applications/XAMPP/etc/extra/httpd-vhosts.conf <<EOL
 EOL
 sudo sh -c "echo \"127.0.0.1	$vhostname\" >> /private/etc/hosts"
 
-#устанавливаем Wordpress
-open -a safari http://$vhostname
+#завершение установки
+echo "============================================"
+echo "Завершение установки"
+echo "============================================"
+
+echo "Для завершения установки перейдите http://$vhostname"
 
 #удаление файлов
 rm wp-install.sh
+
+#получение скрипта для первоначальной настройки
+curl -L -o 'wp-options.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-install.sh
+
+
 
 
 
