@@ -1,7 +1,7 @@
 #!/bin/bash -e
 clear
-echo "Это локальная установка? (y/n)"
-read -e islocalsetup
+#echo "Это локальная установка? (y/n)"
+#read -e islocalsetup
 
 #скачивание composer.json
 #echo "Скачивание composer.json"
@@ -102,7 +102,7 @@ echo "============================================"
 echo "Создать базу данных? (y/n)"
 read -e setupmysql
 if [ "$setupmysql" == y ] ; then
-	echo "Используется XAMPP?: "
+	echo "Используется XAMPP? (y/n): "
 	read -e usexampp
 	echo "Администратор базы данных: "
 	read -e mysqluser
@@ -112,7 +112,7 @@ if [ "$setupmysql" == y ] ; then
 	read -e mysqlhost
 		mysqlhost=${mysqlhost:-localhost}
 
-	dbsetup="create database $dbname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
+	dbsetup="create database $dbname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;GRANT ALL PRIVILEGES ON $dbname.* TO $mysqluser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
 	if [ "$usexampp" == y ] ; then
 		/Applications/XAMPP/bin/mysql -u $mysqluser -p$mysqlpass -e "$dbsetup"
 	else
