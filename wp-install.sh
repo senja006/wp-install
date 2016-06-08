@@ -166,6 +166,9 @@ read -e wpemail
 
 wp core install --url=$localhostname --title=$wptitle --admin_user=$wpadmin --admin_password=$wpadpass --admin_email=$wpemail
 
+#удаление файлов
+rm wp-install.sh
+
 
 
 
