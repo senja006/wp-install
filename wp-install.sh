@@ -112,11 +112,11 @@ if [ "$setupmysql" == y ] ; then
 	read -e mysqlhost
 		mysqlhost=${mysqlhost:-localhost}
 
-	dbsetup="create database $dbname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;GRANT ALL PRIVILEGES ON $dbname.* TO $mysqluser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
+	dbsetup="create database $dbname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$mysqlhost IDENTIFIED BY '$dbpass';FLUSH PRIVILEGES;"
 	if [ "$usexampp" == y ] ; then
-		/Applications/XAMPP/bin/mysql -u $mysqluser -p$mysqlpass -e "$dbsetup"
+		/Applications/XAMPP/bin/mysql -u $dbuser -p$dbpass -e "$dbsetup"
 	else
-		mysql -u $mysqluser -p$mysqlpass -e "$dbsetup"
+		mysql -u $dbuser -p$dbpass -e "$dbsetup"
 	fi
 	if [ $? != "0" ]; then
 		echo "============================================"
