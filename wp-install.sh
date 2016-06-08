@@ -151,20 +151,7 @@ EOL
 sudo sh -c "echo \"127.0.0.1	$localhostname\" >> /private/etc/hosts"
 
 #устанавливаем Wordpress
-echo "============================================"
-echo "Установка Wordpress"
-echo "============================================"
-
-echo "Название сайта"
-read -e wptitle
-echo "Логин администратора"
-read -e wpadmin
-echo "Пароль администратора"
-read -e wpadpass
-echo "Email администратора"
-read -e wpemail
-
-wp core install --url=$localhostname --title=$wptitle --admin_user=$wpadmin --admin_password=$wpadpass --admin_email=$wpemail
+open $localhostname
 
 #удаление файлов
 rm wp-install.sh
