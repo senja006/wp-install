@@ -158,11 +158,11 @@ echo "============================================"
 
 echo "Для завершения установки перейдите http://$vhostname"
 
-#удаление файлов
+#удаление файла
 rm wp-install.sh
 
 #получение скрипта для первоначальной настройки
-curl -L -o 'wp-options.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-install.sh
+curl -L -o 'wp-options.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-options.sh
 
 
 
