@@ -164,6 +164,9 @@ rm wp-install.sh
 #получение скрипта для первоначальной настройки
 curl -L -o 'wp-options.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-options.sh
 
+#получение скрипта для настройки git
+curl -L -o 'wp-options-git.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-options.sh
+
 
 
 

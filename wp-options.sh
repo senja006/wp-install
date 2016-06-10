@@ -1,4 +1,5 @@
 #!/bin/bash -e
+echo "Установка настроек..."
 wp option update blogdescription ''
 wp option update category_base '/category'
 wp option update tag_base '/tag'
@@ -14,13 +15,17 @@ wp option update rss_use_excerpt '1'
 
 wp rewrite flush
 
+echo "Удаление постов и комментариев..."
 wp comment delete 1 --force
 wp post delete 1 2 --force
 
+echo "Удаление плагинов..."
 wp plugin delete hello
 wp plugin delete akismet
 
 #установка стартовой темы
+echo "Установка стартовой темы"
+
 echo "Название темы"
 read -e themename
 echo "Название для папки темы"
@@ -37,11 +42,13 @@ EOL
 wp theme activate $foldername
 
 #установка дефолтной темы
+echo "Установка дефолтной темы..."
 cat >> wp-config.php <<EOL
 define('WP_DEFAULT_THEME', $foldername);
 EOL
 
 #установка необходимых плагинов
+echo "Установка необходимых плагинов..."
 wp plugin install cyr3lat --activate
 wp plugin install jetpack-widget-visibility --activate
 
