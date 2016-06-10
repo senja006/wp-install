@@ -1,4 +1,6 @@
 #!/bin/bash -e
+echo "Начать настройку Wordpress? (y/n): "
+read -e start
 echo "Установка настроек..."
 wp option update blogdescription ''
 wp option update category_base '/category'
@@ -57,6 +59,17 @@ echo "Удалить файл настройки? (y/n): "
 read -e isdelete
 if [ "$isdelete" == y ] ; then
 	rm wp-options.sh
+fi
+
+#запуск настройки сервера
+echo "Запустить настройку сервера? (y/n): "
+read -e runoptionsserver
+
+if [ "$runoptionsserver" == y ] ; then
+
+	curl -L -o 'wp-options-server.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-options-server.sh
+	sh wp-options-server.sh
+
 fi
 
 
