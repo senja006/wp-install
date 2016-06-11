@@ -44,10 +44,10 @@ EOL
 wp theme activate $foldername
 
 #установка дефолтной темы
-echo "Установка дефолтной темы..."
-cat >> wp-config.php <<EOL
-define('WP_DEFAULT_THEME', $foldername);
-EOL
+#echo "Установка дефолтной темы..."
+#cat >> wp-config.php <<EOL
+#define('WP_DEFAULT_THEME', $foldername);
+#EOL
 
 #установка необходимых плагинов
 echo "Установка необходимых плагинов..."
@@ -62,13 +62,13 @@ if [ "$isdelete" == y ] ; then
 fi
 
 #запуск настройки сервера
-echo "Запустить настройку сервера? (y/n): "
-read -e runoptionsserver
+echo "Запустить настройку git? (y/n): "
+read -e create_repo
 
-if [ "$runoptionsserver" == y ] ; then
+if [ "$create_repo" == y ] ; then
 
-	curl -L -o 'wp-options-server.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-options-server.sh
-	sh wp-options-server.sh
+	curl -L -o 'wp-create-repo.sh' https://raw.githubusercontent.com/senja006/wp-shell/master/wp-create-repo.sh
+	sh wp-create-repo.sh
 
 fi
 
