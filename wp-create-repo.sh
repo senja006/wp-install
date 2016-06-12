@@ -116,9 +116,7 @@ if [ "$install_script" == "y" ]; then
 #!/bin/bash -e
 #ssh $ssh_connect -p "$ssh_port" 'bash -s' < $dir/$name_file
 
-ssh $ssh_connect -p "$ssh_port"
-cd $remote_folder
-git pull origin $branch
+ssh $ssh_connect -p "$ssh_port" "cd $remote_folder; git pull origin $branch"
 EOL
 fi
 
@@ -135,10 +133,36 @@ if [ "$install_remote_server" == "y" ]; then
 		ssh_port=${ssh_port:-9999}
 	echo "Папка проекта на удаленном сервере?: "
 	read -e remote_folder
+	echo "Скопировать на удаленный сервер файл wp-config.php (нужно запустить файл wp-copy-config.sh после клонирования репозитория)? (y/n): "
+	read -e copy_config
+
+	if [ "$copy_config" == "y" ]; then
+		echo "Путь к корню на удаленном сервере (по умолчанию: /home/senja006)?: "
+		read -e remote_path
+			remote_path=${remote_path:-/home/senja006}
+
+		dir=`pwd`
+		cat >> wp-copy-config.sh <<EOL
+
+#!/bin/bash -e
+cd $dir
+cp wp-config.php wp-config-temp.php
+open -a "Sublime text" wp-config-temp.php
+echo "Копировать файл на удаленный сервер?: "
+read -e start_copy
+scp -P $ssh_port $dir/wp-config-temp.php $ssh_connect:$remote_path/$remote_folder
+ssh $ssh_connect -p "$ssh_port" "cd $remote_folder; mv wp-config-temp.php wp-config.php"
+rm wp-config-temp.php
+rm wp-copy-config.sh
+EOL
+		chmod +x wp-copy-config.sh
+		open -a "Terminal" `pwd`/wp-copy-config.sh
+	fi
 
 	dir=`pwd`
 
-	ssh -t $ssh_connect -p "$ssh_port" "cd $remote_folder && $(<$dir/wp-install-server.sh)"
+	ssh -t $ssh_connect -p "$ssh_port" "cd $remote_folder && $(<$dir/wp-create-repo.sh)"
+	#ssh -t senja006@sra.webhost1.ru -p "9999" "cd wp-vector.yarkevich.ru && $(</Users/senja006/Documents/Frontend/Wordpress/wp-vector/wp-create-repo.sh)"
 fi
 
 
