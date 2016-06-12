@@ -12,6 +12,10 @@ read -e branch
 echo "Вызов wp-cli (например, php /home/senja006/wp-cli.phar. По умолчанию: wp)? : "
 read -e alias_wp_cli
 	alias_wp_cli=${alias_wp_cli:-wp}
+echo "URL на другом сервере (для поиска и замены в базе)?: "
+read -e old_url
+echo "URL на текущем сервере (для поиска и замены в базе)?: "
+read -e new_url
 
 if [ "$project_exist" == "n" ]; then
 	echo "Инициализация репозитория..."
@@ -25,7 +29,7 @@ if [ "$project_exist" == "n" ]; then
 		$alias_wp_cli db export "wp-db-$branch.sql"
 	fi
 
-	echo "Скачивать gitignore для Wordpress? (y/n): "
+	echo "Скачать gitignore для Wordpress? (y/n): "
 	read -e load_gitignore
 	if [ "$load_gitignore" == "y" ]; then
 		echo "Скачивание .gitignore..."
@@ -64,10 +68,6 @@ else
 	if [ "$used_base" == "y" ]; then
 		echo "Для продолжения необходимо скопировать wp-config.php и создать базу данных. Продолжать? (y/n): "
 		read -e wp_config_copy
-		echo "Старый url?: "
-		read -e old_url
-		echo "Новый url?: "
-		read -e new_url
 
 		$alias_wp_cli db import "wp-db-$branch.sql"
 		$alias_wp_cli search-replace $old_url $new_url
@@ -86,30 +86,34 @@ EOL
 chmod +x .git/hooks/pre-commit
 
 #после pull
-echo "Настройка хука post-merge..."
-cat >> .git/hooks/post-merge <<EOL
+echo "Добавить git хук после pull для импорта базы (!!! не добавлять для master)? (y/n): "
+read -e add_post_merge
+if [ "$add_post_merge" == "y" ]; then
+	echo "Настройка хука post-merge..."
+	cat >> .git/hooks/post-merge <<EOL
 
 #!/bin/bash -e
 $alias_wp_cli db import "wp-db-$branch.sql"
 $alias_wp_cli search-replace $old_url $new_url
 EOL
-chmod +x .git/hooks/post-merge
+	chmod +x .git/hooks/post-merge
+fi
 
 #создание скрипта для принудительного обновления удаленного сервера
 echo "Создать скрипт для принудительного обновления удаленного сервера? (y/n): "
 read -e install_script
 if [ "$install_script" == "y" ]; then
-	echo "Параметры ssh подключения (по умолчанию senja006@sra.webhost1.ru)"
+	echo "Параметры ssh подключения (по умолчанию senja006@sra.webhost1.ru)? :"
 	read -e ssh_connect
 		ssh_connect=${ssh_connect:-senja006@sra.webhost1.ru}
-	echo "Порт ssh подключения (по умолчанию 9999)"
+	echo "Порт ssh подключения (по умолчанию 9999)? : "
 	read -e ssh_port
 		ssh_port=${ssh_port:-9999}
 	echo "Папка проекта на удаленном сервере?: "
 	read -e remote_folder
 
 	dir=`pwd`
-	name_file="wp-remote-pull.sh"
+	name_file="wp-remote-dev-pull.sh"
 
 	cat >> $name_file <<EOL
 
