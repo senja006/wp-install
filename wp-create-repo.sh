@@ -121,15 +121,17 @@ else
 fi
 
 #установка хуков
-#перед коммитом
-echo "Настройка хука pre-commit..."
-cat >> .git/hooks/pre-commit <<EOL
+if [ "$used_base" == "y" ]; then
+	#перед коммитом
+	echo "Настройка хука pre-commit..."
+	cat >> .git/hooks/pre-commit <<EOL
 
 #!/bin/bash -e
 $alias_wp_cli db export wp-db-$branch.sql
 git add wp-db-$branch.sql
 EOL
-chmod +x .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
+fi
 
 #после pull
 echo "Добавить git хук после pull для импорта базы (!!! не добавлять для master)? (y/n): "
