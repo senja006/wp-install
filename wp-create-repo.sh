@@ -44,7 +44,7 @@ EOL
 
 	ssh -t $ssh_connect -p "$ssh_port" "cd $remote_folder && $(<$dir/wp-create-repo.sh)"
 	#ssh -t senja006@sra.webhost1.ru -p "9999" "cd wp-vector.yarkevich.ru && $(</Users/senja006/Documents/Frontend/Wordpress/wp-vector/wp-create-repo.sh)"
-	#exit
+	exit
 fi
 
 echo "Проект уже есть в удаленном хранилище git (github, bitbucket)? (y/n): "
