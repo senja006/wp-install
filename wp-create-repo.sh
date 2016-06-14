@@ -152,26 +152,26 @@ fi
 #создание скрипта для принудительного обновления удаленного сервера
 if [ "$remote_dev_server_pull" == "y" ]; then
 	echo "Параметры ssh подключения (по умолчанию senja006@sra.webhost1.ru)? :"
-		read -e ssh_connect
-			ssh_connect=${ssh_connect:-senja006@sra.webhost1.ru}
-		echo "Порт ssh подключения (по умолчанию 9999)? : "
-		read -e ssh_port
-			ssh_port=${ssh_port:-9999}
-		echo "Папка проекта на удаленном сервере?: "
-		read -e remote_folder
-		echo "Забирать верстку для удаленного сервера (это для деплоя верстки)? (y/n): "
-		read -e grep_markup
+	read -e ssh_connect
+		ssh_connect=${ssh_connect:-senja006@sra.webhost1.ru}
+	echo "Порт ssh подключения (по умолчанию 9999)? : "
+	read -e ssh_port
+		ssh_port=${ssh_port:-9999}
+	echo "Папка проекта на удаленном сервере?: "
+	read -e remote_folder
+	echo "Забирать верстку для удаленного сервера (это для деплоя верстки)? (y/n): "
+	read -e grep_markup
 
-		dir=`pwd`
-		name_file="wp-remote-dev-pull.sh"
+	dir=`pwd`
+	name_file_remote_pull="wp-remote-dev-pull.sh"
 
-		cat > $name_file <<EOL
+	cat > $name_file_remote_pull <<EOL
 
 #!/bin/bash -e
-#ssh $ssh_connect -p "$ssh_port" 'bash -s' < $dir/$name_file
+#ssh $ssh_connect -p "$ssh_port" 'bash -s' < $dir/$name_file_remote_pull
 EOL
 	if [ "$grep_markup" == "y" ]; then
-		cat >> $name_file <<EOL
+		cat >> $name_file_remote_pull <<EOL
 
 cd ..
 msg=\`git log --oneline -1\`
@@ -188,7 +188,7 @@ cd ..
 EOL
 	fi
 
-		cat >> $name_file <<EOL
+	cat >> $name_file_remote_pull <<EOL
 
 ssh $ssh_connect -p "$ssh_port" "cd $remote_folder; git pull origin $branch"
 EOL
