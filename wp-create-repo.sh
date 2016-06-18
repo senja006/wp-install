@@ -163,32 +163,35 @@ if [ "$remote_dev_server_pull" == "y" ]; then
 	read -e grep_markup
 
 	dir=`pwd`
-	name_file_remote_pull="wp-remote-dev-pull.sh"
+	name_file_remote_update="remote-server-update.sh"
 
-	cat > $name_file_remote_pull <<EOL
+	cat > $name_file_remote_update <<EOL
 
 #!/bin/bash -e
-#ssh $ssh_connect -p "$ssh_port" 'bash -s' < $dir/$name_file_remote_pull
+#ssh $ssh_connect -p "$ssh_port" 'bash -s' < $dir/$name_file_remote_update
 EOL
 	if [ "$grep_markup" == "y" ]; then
-		cat >> $name_file_remote_pull <<EOL
+		echo "Название папки с проектом (server, server-wp)?: "
+		read -e local_folder
+
+		cat >> $name_file_remote_update <<EOL
 
 cd ..
 msg=\`git log --oneline -1\`
-cd server
-files=\`ls | grep -v wp-remote-dev-pull.sh\`
+cd $local_folder
+files=\`ls | grep -v $name_file_remote_update\`
 rm -r \$files
 cd ..
-cp -r dev/* server
-cd server
+cp -r dev/* $local_folder
+cd $local_folder
 git add .
 git commit -m "\$msg"
 git push origin $branch
-cd ..
+#cd ..
 EOL
 	fi
 
-	cat >> $name_file_remote_pull <<EOL
+	cat >> $name_file_remote_update <<EOL
 
 ssh $ssh_connect -p "$ssh_port" "cd $remote_folder; git pull origin $branch"
 EOL
