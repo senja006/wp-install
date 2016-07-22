@@ -129,8 +129,9 @@ if [ "$used_base" == "y" ]; then
 	cat >> .git/hooks/pre-commit <<EOL
 
 #!/bin/bash -e
-$alias_wp_cli db export wp-db-$branch.sql
-git add wp-db-$branch.sql
+namebranch=\`git rev-parse --abbrev-ref HEAD\`
+$alias_wp_cli db export wp-db-\$namebranch.sql
+git add wp-db-\$namebranch.sql
 EOL
 	chmod +x .git/hooks/pre-commit
 fi
@@ -143,7 +144,8 @@ if [ "$add_post_merge" == "y" ]; then
 	cat >> .git/hooks/post-merge <<EOL
 
 #!/bin/bash -e
-$alias_wp_cli db import "wp-db-$branch.sql"
+namebranch=\`git rev-parse --abbrev-ref HEAD\`
+$alias_wp_cli db import "wp-db-\$namebranch.sql"
 $alias_wp_cli search-replace $old_url $new_url
 EOL
 	chmod +x .git/hooks/post-merge

@@ -27,7 +27,7 @@ echo "Установка дополнительных настроек..."
 echo "============================================"
 cat >> wp-config-sample.php <<EOL
 // disable revisions
-define( 'WP_POST_REVISIONS', false );
+define( 'WP_POST_REVISIONS', 3 );
  
 // autosave interval
 define( 'AUTOSAVE_INTERVAL', 240 ); // the value should be in seconds
