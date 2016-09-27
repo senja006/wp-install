@@ -52,9 +52,9 @@ wp theme activate $foldername
 #установка необходимых плагинов
 echo "Установка необходимых плагинов..."
 wp plugin install cyr3lat --activate
-wp plugin install jetpack-widget-visibility --activate
-wp plugin install https://github.com/afragen/github-updater/archive/5.4.1.zip --activate
-wp plugin install https://github.com/wp-sync-db/wp-sync-db/archive/1.5.zip --activate
+#wp plugin install jetpack-widget-visibility --activate
+#wp plugin install https://github.com/afragen/github-updater/archive/5.4.1.zip --activate
+#wp plugin install https://github.com/wp-sync-db/wp-sync-db/archive/1.5.zip --activate
 
 #удаление файла
 echo "Удалить файл настройки? (y/n): "
