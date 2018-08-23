@@ -6,7 +6,7 @@ echo "Выполнить настройку удаленного сервера?
 read -e install_remote_server
 
 if [ "$install_remote_server" == "y" ]; then
-	echo "Параметры ssh подключения (по умолчанию senja006@sra.webhost1.ru)"
+	echo "Параметры ssh подключения (по умолчанию senja006@s19.webhost1.ru)"
 	read -e ssh_connect
 		ssh_connect=${ssh_connect:-senja006@sra.webhost1.ru}
 	echo "Порт ssh подключения (по умолчанию 9999)"

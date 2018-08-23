@@ -59,6 +59,9 @@ define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', true );
 
 // запрет автоматического обновления
 // define( 'AUTOMATIC_UPDATER_DISABLED', true );
+
+define('WP_MEMORY_LIMIT', '512M');
+define('WP_MAX_MEMORY_LIMIT', '512M');
 EOL
 
 #настройки
