@@ -25,13 +25,13 @@ crontab -e
 # Author: Mike
 
 #site name
-SITE=vylechi-varikoz
+SITE=site_name
 
 #define local path for backups
-BACKUPPATH=/tmp/backups
+BACKUPPATH=tmp/backups
 
 #path to WordPress installation folders
-SITESTORE=/srv/users/serverpilot/apps
+SITESTORE=apps
 
 #date prefix
 DATEFORM=$(date +"%Y-%m-%d")
@@ -43,7 +43,7 @@ DAYSKEEP=7
 DAYSKEPT=$(date +"%Y-%m-%d" -d "-$DAYSKEEP days")
 
 #create array of sites based on folder names
-SITELIST=($(ls -d $SITESTORE/* | awk -F '/' '{print $NF}'))
+#SITELIST=($(ls -d $SITESTORE/* | awk -F '/' '{print $NF}'))
 
 #make sure the backup folder exists
 mkdir -p $BACKUPPATH
@@ -59,7 +59,7 @@ echo Backing up $SITE
 #enter the WordPress folder
 cd $SITESTORE/$SITE/public
 if [ ! -e $BACKUPPATH/$SITE ]; then
-    mkdir $BACKUPPATH/$SITE
+    mkdir -p $BACKUPPATH/$SITE
 fi
 
 #back up the WordPress folder
@@ -84,5 +84,5 @@ find $BACKUPPATH -type d -mtime +$DAYSKEEP -exec rm -rf {} \;
 
 #Fix permissions for standard Debian and Ubuntu installations
 #sudo chown -R www-data:www-data $SITESTORE
-#sudo find $SITESTORE -type f -exec chmod 644 {} +
-# sudo find $SITESTORE -type d -exec chmod 755 {} +
+#sudo find $SITESTORE -type f -exec chmod 777 {} +
+#sudo find $SITESTORE -type d -exec chmod 777 {} +
