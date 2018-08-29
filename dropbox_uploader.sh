@@ -1,4 +1,5 @@
 #https://guides.wp-bullet.com/automatically-back-wordpress-dropbox-wp-cli-bash-script/
+#пользователю serverpilot даем доступ root в etc/passwd - 0:0
 
 #sudo apt-get update
 #sudo apt-get install curl -y
@@ -16,7 +17,7 @@ vim /dropboxbackup_sitename.sh
 
 #cron
 crontab -e
-01 00 * * * bash /srv/users/serverpilot/dropboxbackup_sitename.sh
+01 00 * * * bash /srv/users/serverpilot/apps/NAME_SITE/public/dropbox_uploader.sh
 
 #grep CRON /var/log/syslog
 
@@ -25,13 +26,13 @@ crontab -e
 # Author: Mike
 
 #site name
-SITE=site_name
+SITE=vylechi-varikoz
 
 #define local path for backups
-BACKUPPATH=tmp/backups
+BACKUPPATH=/srv/users/serverpilot/tmp/backups
 
 #path to WordPress installation folders
-SITESTORE=apps
+SITESTORE=/srv/users/serverpilot/apps
 
 #date prefix
 DATEFORM=$(date +"%Y-%m-%d")
