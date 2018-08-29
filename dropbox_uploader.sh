@@ -16,7 +16,7 @@ vim /dropboxbackup_sitename.sh
 
 #cron
 crontab -e
-01 00 * * * bash /dropboxbackup_sitename.sh
+01 00 * * * bash /srv/users/serverpilot/dropboxbackup_sitename.sh
 
 #grep CRON /var/log/syslog
 
